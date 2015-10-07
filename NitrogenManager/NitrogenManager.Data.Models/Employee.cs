@@ -4,7 +4,6 @@
     {
         public Employee()
         {
-            this.Manager = new Employee();
         }
 
         public int ID { get; set; }
@@ -17,6 +16,6 @@
 
         public string JobPosition { get; set; }
 
-        public Employee Manager { get; set; }
+        public bool HasManager { get; set; }
     }
 }
