@@ -1,6 +1,6 @@
 ﻿namespace NitrogenManager.Data
 {
-    public class Class1
+    public class DataRepository
     {
     }
 }

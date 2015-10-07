@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NitrogenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Bulstat" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="JobPositionID" Type="int" Nullable="false" />
+          <Property Name="ManagerID" Type="int" />
+          <Property Name="PlaceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JobPositions">
+          <Key>
+            <PropertyRef Name="JobPositionID" />
+          </Key>
+          <Property Name="JobPositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Places">
+          <Key>
+            <PropertyRef Name="PlaceID" />
+          </Key>
+          <Property Name="PlaceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductGroups">
+          <Key>
+            <PropertyRef Name="ProductGroupID" />
+          </Key>
+          <Property Name="ProductGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductGroupID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Storages">
+          <Key>
+            <PropertyRef Name="StorageID" />
+          </Key>
+          <Property Name="StorageID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SuppliersAndPlaces">
+          <Key>
+            <PropertyRef Name="PlaceID" />
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="PlaceID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employees_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees1" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employees1">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_JobPositions">
+          <End Role="JobPositions" Type="Self.JobPositions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobPositions">
+              <PropertyRef Name="JobPositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="JobPositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Places">
+          <End Role="Places" Type="Self.Places" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Places_Companies">
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="Places" Type="Self.Places" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Places">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductGroups">
+          <End Role="ProductGroups" Type="Self.ProductGroups" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductGroups">
+              <PropertyRef Name="ProductGroupID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SuppliersAndPlaces_Places">
+          <End Role="Places" Type="Self.Places" Multiplicity="1" />
+          <End Role="SuppliersAndPlaces" Type="Self.SuppliersAndPlaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="SuppliersAndPlaces">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SuppliersAndPlaces_Suppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="SuppliersAndPlaces" Type="Self.SuppliersAndPlaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="SuppliersAndPlaces">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NitrogenModelStoreContainer">
+          <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobPositions" EntityType="Self.JobPositions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Places" EntityType="Self.Places" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGroups" EntityType="Self.ProductGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storages" EntityType="Self.Storages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SuppliersAndPlaces" EntityType="Self.SuppliersAndPlaces" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employees_Employees" Association="Self.FK_Employees_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_JobPositions" Association="Self.FK_Employees_JobPositions">
+            <End Role="JobPositions" EntitySet="JobPositions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Places" Association="Self.FK_Employees_Places">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Places_Companies" Association="Self.FK_Places_Companies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Places" EntitySet="Places" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductGroups" Association="Self.FK_Products_ProductGroups">
+            <End Role="ProductGroups" EntitySet="ProductGroups" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SuppliersAndPlaces_Places" Association="Self.FK_SuppliersAndPlaces_Places">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="SuppliersAndPlaces" EntitySet="SuppliersAndPlaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SuppliersAndPlaces_Suppliers" Association="Self.FK_SuppliersAndPlaces_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="SuppliersAndPlaces" EntitySet="SuppliersAndPlaces" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NitrogenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Bulstat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Places" Relationship="Self.FK_Places_Companies" FromRole="Companies" ToRole="Places" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="JobPositionID" Type="Int32" Nullable="false" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="PlaceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees1" Relationship="Self.FK_Employees_Employees" FromRole="Employees" ToRole="Employees1" />
+          <NavigationProperty Name="Employees2" Relationship="Self.FK_Employees_Employees" FromRole="Employees1" ToRole="Employees" />
+          <NavigationProperty Name="JobPositions" Relationship="Self.FK_Employees_JobPositions" FromRole="Employees" ToRole="JobPositions" />
+          <NavigationProperty Name="Places" Relationship="Self.FK_Employees_Places" FromRole="Employees" ToRole="Places" />
+        </EntityType>
+        <EntityType Name="JobPositions">
+          <Key>
+            <PropertyRef Name="JobPositionID" />
+          </Key>
+          <Property Name="JobPositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_JobPositions" FromRole="JobPositions" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Places">
+          <Key>
+            <PropertyRef Name="PlaceID" />
+          </Key>
+          <Property Name="PlaceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Companies" Relationship="Self.FK_Places_Companies" FromRole="Places" ToRole="Companies" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Places" FromRole="Places" ToRole="Employees" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.SuppliersAndPlaces" FromRole="Places" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="ProductGroups">
+          <Key>
+            <PropertyRef Name="ProductGroupID" />
+          </Key>
+          <Property Name="ProductGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_ProductGroups" FromRole="ProductGroups" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductGroupID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductGroups" Relationship="Self.FK_Products_ProductGroups" FromRole="Products" ToRole="ProductGroups" />
+        </EntityType>
+        <EntityType Name="Storages">
+          <Key>
+            <PropertyRef Name="StorageID" />
+          </Key>
+          <Property Name="StorageID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Places" Relationship="Self.SuppliersAndPlaces" FromRole="Suppliers" ToRole="Places" />
+        </EntityType>
+        <Association Name="FK_Places_Companies">
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="Places" Type="Self.Places" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Places">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees1" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employees1">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_JobPositions">
+          <End Role="JobPositions" Type="Self.JobPositions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobPositions">
+              <PropertyRef Name="JobPositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="JobPositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Places">
+          <End Role="Places" Type="Self.Places" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="PlaceID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PlaceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductGroups">
+          <End Role="ProductGroups" Type="Self.ProductGroups" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductGroups">
+              <PropertyRef Name="ProductGroupID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SuppliersAndPlaces">
+          <End Role="Places" Type="Self.Places" Multiplicity="*" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="NitrogenEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Companies" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="JobPositions" EntityType="Self.JobPositions" />
+          <EntitySet Name="Places" EntityType="Self.Places" />
+          <EntitySet Name="ProductGroups" EntityType="Self.ProductGroups" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Storages" EntityType="Self.Storages" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+          <AssociationSet Name="FK_Places_Companies" Association="Self.FK_Places_Companies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Places" EntitySet="Places" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Employees" Association="Self.FK_Employees_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_JobPositions" Association="Self.FK_Employees_JobPositions">
+            <End Role="JobPositions" EntitySet="JobPositions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Places" Association="Self.FK_Employees_Places">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductGroups" Association="Self.FK_Products_ProductGroups">
+            <End Role="ProductGroups" EntitySet="ProductGroups" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="SuppliersAndPlaces" Association="Self.SuppliersAndPlaces">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Suppliers" EntitySet="Suppliers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NitrogenModelStoreContainer" CdmEntityContainer="NitrogenEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="NitrogenModel.Companies">
+              <MappingFragment StoreEntitySet="Companies">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Bulstat" ColumnName="Bulstat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="NitrogenModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="JobPositionID" ColumnName="JobPositionID" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobPositions">
+            <EntityTypeMapping TypeName="NitrogenModel.JobPositions">
+              <MappingFragment StoreEntitySet="JobPositions">
+                <ScalarProperty Name="JobPositionID" ColumnName="JobPositionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="NitrogenModel.Places">
+              <MappingFragment StoreEntitySet="Places">
+                <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductGroups">
+            <EntityTypeMapping TypeName="NitrogenModel.ProductGroups">
+              <MappingFragment StoreEntitySet="ProductGroups">
+                <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="NitrogenModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storages">
+            <EntityTypeMapping TypeName="NitrogenModel.Storages">
+              <MappingFragment StoreEntitySet="Storages">
+                <ScalarProperty Name="StorageID" ColumnName="StorageID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="NitrogenModel.Suppliers">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="SuppliersAndPlaces" TypeName="NitrogenModel.SuppliersAndPlaces" StoreEntitySet="SuppliersAndPlaces">
+            <EndProperty Name="Places">
+              <ScalarProperty Name="PlaceID" ColumnName="PlaceID" />
+            </EndProperty>
+            <EndProperty Name="Suppliers">
+              <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
