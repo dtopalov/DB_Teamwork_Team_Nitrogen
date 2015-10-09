@@ -1,0 +1,23 @@
+﻿@model ICollection<NitrogenManagerMVC.NitrogenManagerWebService.Employee>
+
+@{
+    ViewBag.Title = "NitrogenManager";
+}
+
+<div class="jumbotron">
+    <h1>NitrogenManager</h1>
+    <p><a href="#" class="btn btn-primary btn-lg">Learn more &raquo;</a>
+    </p>
+</div>
+
+<p>Employees from DB Example -> Look in Controllers folder -> HomeController (imagine this is a class and the methods inside are called Actions)
+They all return the base class ActionResult as View(if you want you can pass a model like this or to use ViewBag(this is something like a collection of dynamic))
+You can access this Controllers/Classes/ async with JS if you target the browserURL</p>
+
+@foreach (var emp in Model)
+{
+    <h3>Employee firstName : @emp.FirstName</h3>
+    <h3>Employee lastName : @emp.LastName</h3>
+    <h3>Employee ID : @emp.ID</h3>
+    <hr />
+}

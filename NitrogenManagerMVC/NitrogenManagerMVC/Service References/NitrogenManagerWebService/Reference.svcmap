@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e58c2fd2-97a2-4afb-a164-d99f90bc670f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.Collection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50462/DataRepository.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DataRepository.xsd" MetadataType="Schema" ID="c2a9c2ce-ca41-4c65-8b6b-f769d8950aec" SourceId="1" SourceUrl="http://localhost:50462/DataRepository.svc?xsd=xsd1" />
+    <MetadataFile FileName="DataRepository.wsdl" MetadataType="Wsdl" ID="1d41767c-ce0a-481f-bce8-bebf37191d3a" SourceId="1" SourceUrl="http://localhost:50462/DataRepository.svc?wsdl" />
+    <MetadataFile FileName="DataRepository.disco" MetadataType="Disco" ID="6b6081eb-c6d9-48b4-94ac-1ed2a815f145" SourceId="1" SourceUrl="http://localhost:50462/DataRepository.svc?disco" />
+    <MetadataFile FileName="DataRepository1.xsd" MetadataType="Schema" ID="5b49ae7f-61f0-4817-96ab-49530ef65bf6" SourceId="1" SourceUrl="http://localhost:50462/DataRepository.svc?xsd=xsd0" />
+    <MetadataFile FileName="DataRepository2.xsd" MetadataType="Schema" ID="cc133160-04fa-4125-950a-a71ab694896f" SourceId="1" SourceUrl="http://localhost:50462/DataRepository.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="NitrogenManager.Data.WebService.DataRepository" CodeBehind="DataRepository.svc.cs" %>
