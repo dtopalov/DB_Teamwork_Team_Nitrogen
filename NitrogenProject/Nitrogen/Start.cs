@@ -8,6 +8,7 @@
     using System.IO;
     using System.Linq;
     using System.Xml.Serialization;
+    using ZipExcelImporter;
 
     internal class Start
     {
@@ -47,7 +48,7 @@
             MongoRepository mongoCtx = new MongoRepository();
 
             List<Nitrogen.Mongo.Models.Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
-
+            
             //using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
             //{
             //    foreach (var place in allPlaces)
@@ -81,10 +82,12 @@
                 str.Write(xmlString);
             }
 
-
             var objectsFromXml = xmlSerializer.ParseXml<List<Nitrogen.Mongo.Models.Place>>(xmlFilePath);
 
             Console.WriteLine();
+
+            /*ReportImporter importer = new ReportImporter();
+            importer.GetZipFile();*/
         }
 
         
