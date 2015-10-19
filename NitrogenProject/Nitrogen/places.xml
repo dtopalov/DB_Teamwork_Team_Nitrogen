@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ArrayOfPlace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Place>
+    <Name>The Hole</Name>
+    <Address>1 Vitosha Blvd.</Address>
+  </Place>
+  <Place>
+    <Name>Shiny Place</Name>
+    <Address>2 Vitosha Blvd.</Address>
+  </Place>
+  <Place>
+    <Name>Space Bar</Name>
+    <Address>3 Vitosha Blvd.</Address>
+  </Place>
+</ArrayOfPlace>

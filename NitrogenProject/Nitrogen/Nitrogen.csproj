@@ -98,6 +98,7 @@
     <Compile Include="Mongo\Models\Place.cs" />
     <Compile Include="Mongo\Models\Product.cs" />
     <Compile Include="Mongo\MongoRepository.cs" />
+    <Compile Include="Serializers\XmlSerialzer.cs" />
     <Compile Include="Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

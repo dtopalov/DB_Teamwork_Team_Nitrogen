@@ -4,7 +4,10 @@
     using Nitrogen.Mongo;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
     using System.Linq;
+    using System.Xml.Serialization;
 
     internal class Start
     {
@@ -43,29 +46,40 @@
 
             MongoRepository mongoCtx = new MongoRepository();
 
-            //List<Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
+            List<Nitrogen.Mongo.Models.Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
 
             //using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
             //{
             //    foreach (var place in allPlaces)
-            //    {  
+            //    {
             //        ctx.Places.Add(place);
             //    }
 
             //    ctx.SaveChanges();
             //}
 
-           var allProducts = mongoCtx.GetAllProducts().ToList();
+            //var allProducts = mongoCtx.GetAllProducts().ToList();
 
-            using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
+            //using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
+            //{
+            //    foreach (var product in allProducts)
+            //    {
+            //        ctx.Products.Add(product);
+            //    }
+
+            //    ctx.SaveChanges();
+            //}
+
+            var xmlSerializer = new Nitrogen.Serializers.XmlSerialzer();
+            
+            var xmlString = xmlSerializer.Serialize<List<Nitrogen.Mongo.Models.Place>>(allPlaces);
+
+            using (var str = new StreamWriter("../../places.xml"))
             {
-                foreach (var product in allProducts)
-                {
-                    ctx.Products.Add(product);
-                }
-
-                ctx.SaveChanges();
+                str.Write(xmlString);
             }
         }
+
+        
     }
 }
