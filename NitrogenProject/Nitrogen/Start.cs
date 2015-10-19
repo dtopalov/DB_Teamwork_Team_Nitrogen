@@ -1,21 +1,15 @@
 ﻿namespace Nitrogen
 {
+    using Nitrogen.App_data;
+    using Nitrogen.Mongo;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
-    using MongoDB.Bson;
-    using MongoDB.Driver.Builders;
-    using Mongo;
-
-    using Nitrogen.Mongo.Models;
-
-    class Start
+    internal class Start
     {
         static void Main()
         {
-            var db = MongoDbOperations.GetDatabase(MongoDbOperations.DatabaseName, MongoDbOperations.DatabaseHost);
-
-            var logs = db.GetCollection<Place>("Places");
 
             //logs.Insert(new Place
             //{
@@ -47,12 +41,31 @@
 
             //logs.Update(query, update);
 
-            //var testLogs = logs.FindAll().Select(l => l.Name);
+            MongoRepository mongoCtx = new MongoRepository();
 
-            //foreach (var log in testLogs)
+            //List<Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
+
+            //using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
             //{
-            //    Console.WriteLine(log);
+            //    foreach (var place in allPlaces)
+            //    {  
+            //        ctx.Places.Add(place);
+            //    }
+
+            //    ctx.SaveChanges();
             //}
+
+           var allProducts = mongoCtx.GetAllProducts().ToList();
+
+            using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
+            {
+                foreach (var product in allProducts)
+                {
+                    ctx.Products.Add(product);
+                }
+
+                ctx.SaveChanges();
+            }
         }
     }
 }
