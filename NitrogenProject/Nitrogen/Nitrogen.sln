@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nitrogen", "Nitrogen.csproj", "{12138C46-1373-4845-9476-D24EB6B8C5D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZipExcelImporter", "..\ZipExcelImporter\ZipExcelImporter.csproj", "{E3915BF6-09B4-42E9-B396-A179160DC664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{12138C46-1373-4845-9476-D24EB6B8C5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12138C46-1373-4845-9476-D24EB6B8C5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12138C46-1373-4845-9476-D24EB6B8C5D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3915BF6-09B4-42E9-B396-A179160DC664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3915BF6-09B4-42E9-B396-A179160DC664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3915BF6-09B4-42E9-B396-A179160DC664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3915BF6-09B4-42E9-B396-A179160DC664}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

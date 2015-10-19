@@ -122,7 +122,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ZipExcelImporter\ZipExcelImporter.csproj">
+      <Project>{e3915bf6-09b4-42e9-b396-a179160dc664}</Project>
+      <Name>ZipExcelImporter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

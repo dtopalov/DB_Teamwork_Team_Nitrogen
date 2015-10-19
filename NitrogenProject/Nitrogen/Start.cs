@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using ZipExcelImporter;
 
     internal class Start
     {
@@ -66,6 +67,10 @@
 
                 ctx.SaveChanges();
             }
+
+            /* //// Gets Excels in zip archive adds reports to Sales table. 
+             * ReportImporter importer = new ReportImporter();
+            importer.GetZipFile();*/
         }
     }
 }
