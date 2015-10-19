@@ -23,7 +23,9 @@
                     DateTime timeOfTheReport = DateTime.Parse(date);
 
                     string fileExtenstion = zEntity.FileName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).Last();
-                    Console.WriteLine(fileExtenstion);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Processing " + zEntity.FileName);
+                    Console.ResetColor();
 
                     using (var memo = new MemoryStream())
                     {
@@ -32,25 +34,24 @@
                         switch (fileExtenstion)
                         {
                             case "xlsx":
-                                //Reading from a OpenXml Excel file (2007 - 2013 format; *.xlsx)  
+                                //// Reading from a OpenXml Excel file (2007 - 2013 format; *.xlsx)  
                                 excelReader = ExcelReaderFactory.CreateOpenXmlReader(memo);
                                 break;
                             case "xls":
-                                //Reading from a binary Excel file (97-2003 format; *.xls)
+                                //// Reading from a binary Excel file (97-2003 format; *.xls)
                                 excelReader = ExcelReaderFactory.CreateBinaryReader(memo);
                                 break;
                             default:
                                 continue;
                         }
 
-                        //4. DataSet - Create column names from first row
                         excelReader.IsFirstRowAsColumnNames = false;
                         DataSet result = excelReader.AsDataSet();
 
                         excelReader.Dispose();
                         DataRowCollection firstTableRows = result.Tables[0].Rows;
 
-                        ImportInDB(firstTableRows, timeOfTheReport);
+                        this.ImportInDB(firstTableRows, timeOfTheReport);
                     }
                 }
             }
@@ -62,6 +63,8 @@
             {
                 var nameOfPlace = firstTableRows[0].ItemArray[0].ToString();
                 var idOfThePlace = dbConnection.Places.Where(p => p.Name == nameOfPlace).Select(p => p.PlaceId).FirstOrDefault();
+                var idsOfProducts = dbConnection.Products.Select(x => x.ProductId).ToList();
+
                 Place newPlace = new Place();
                 if (idOfThePlace == 0)
                 {
@@ -76,25 +79,23 @@
                 for (int i = 2; i < firstTableRows.Count; i++)
                 {
                     theNewSale = new Sale();
-
                     var row = firstTableRows[i];
+                    int reportProductId = int.Parse(row.ItemArray[0].ToString());
 
-                    theNewSale.ProductId = int.Parse(row.ItemArray[0].ToString());
+                    if (!idsOfProducts.Contains(reportProductId))
+                    {
+                        Console.WriteLine(
+                            string.Format("The id: {0} is not contains in Products! Report cannot be processed.", reportProductId));
+                        continue;
+                    }
+
+                    theNewSale.ProductId = reportProductId;
                     theNewSale.Quantity = int.Parse(row.ItemArray[1].ToString());
                     theNewSale.PricePerUnit = decimal.Parse(row.ItemArray[2].ToString());
                     theNewSale.Sum = decimal.Parse(row.ItemArray[3].ToString());
-                    theNewSale.PlaceId = idOfThePlace != null ? idOfThePlace : newPlace.PlaceId;
+                    theNewSale.PlaceId = idOfThePlace != 0 ? idOfThePlace : newPlace.PlaceId;
                     theNewSale.Date = dateTimeOfReports;
                     dbConnection.Sales.Add(theNewSale);
-
-                    /*foreach (var property in row.ItemArray)
-                    {
-
-                        Console.Write('|' + property.ToString().PadLeft(20, ' '));
-                    }
-
-                    Console.Write('|');
-                    Console.WriteLine();*/
                 }
 
                 try
@@ -103,12 +104,12 @@
                 }
                 catch (Exception ex)
                 {
-                    ShowMessageException(ex);
+                    this.ShowMessageException(ex);
                 }
             }
         }
 
-        private static void ShowMessageException(Exception exception)
+        private void ShowMessageException(Exception exception)
         {
             while (exception.InnerException != null)
             {
