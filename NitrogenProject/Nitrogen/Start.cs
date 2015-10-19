@@ -8,6 +8,7 @@
     using System.IO;
     using System.Linq;
     using System.Xml.Serialization;
+    using ZipExcelImporter;
 
     internal class Start
     {
@@ -78,8 +79,9 @@
             {
                 str.Write(xmlString);
             }
-        }
 
-        
+            /*ReportImporter reporter = new ReportImporter();
+            reporter.GetZipFile();*/
+        }
     }
 }
