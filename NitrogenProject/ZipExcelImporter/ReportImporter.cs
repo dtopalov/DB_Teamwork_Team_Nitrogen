@@ -12,8 +12,8 @@
     {
         public void GetZipFile()
         {
-            string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            FileStream fs = new FileStream(desktop + @"\Excel.zip", FileMode.Open, FileAccess.Read);
+            // string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            FileStream fs = new FileStream("..\\..\\..\\Excel.zip", FileMode.Open, FileAccess.Read);
             using (var zipArchive = ZipFile.Read(fs))
             {
                 IExcelDataReader excelReader;
