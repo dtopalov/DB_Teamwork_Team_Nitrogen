@@ -16,19 +16,32 @@
             return writer.ToString();
         }
 
-        //public T Parse<T>(string filePath)
-        //{
-        //    var result = new StringWriter();
-        //    XmlReader reader = new XmlTextReader();
-        //}
+        public T ParseXml<T>(string filePath) where T : class, new()
+        {
+            string xmlTextToParse = string.Empty;
 
-        //public static T ReadXmlSerializableElement<T>(this XmlReader reader, String elementName) where T : IXmlSerializable
-        //{
-        //    reader.ReadToElement(elementName);
-        //    Type elementType = Type.GetType(reader.GetAttribute("TYPE"));
-        //    T element = (T)Activator.CreateInstance(elementType);
-        //    element.ReadXml(reader);
-        //    return element;
-        //}
+            using (var sr = new StreamReader(filePath))
+            {
+                xmlTextToParse = sr.ReadToEnd();
+            }
+
+            if (string.IsNullOrEmpty(xmlTextToParse))
+            {
+                throw new XmlException("Invalid string input. Cannot parse an empty or null string.", new ArgumentException("xmlTestToParse"));
+            }
+
+
+            var stringReader = new StringReader(xmlTextToParse);
+            var serializer = new XmlSerializer(typeof(T));
+            try
+            {
+                return serializer.Deserialize(stringReader) as T;
+            }
+            catch (Exception e)
+            {
+                throw new XmlException(string.Format("Unable to convert to given string into the type {0}. See inner exception for details.", typeof(T)), e);
+            }
+        }
+
     }
 }

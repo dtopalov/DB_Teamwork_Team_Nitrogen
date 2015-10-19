@@ -8,7 +8,6 @@
     using System.IO;
     using System.Linq;
     using System.Xml.Serialization;
-    using ZipExcelImporter;
 
     internal class Start
     {
@@ -75,13 +74,19 @@
             
             var xmlString = xmlSerializer.Serialize<List<Nitrogen.Mongo.Models.Place>>(allPlaces);
 
-            using (var str = new StreamWriter("../../places.xml"))
+            var xmlFilePath = "../../places.xml";
+
+            using (var str = new StreamWriter(xmlFilePath))
             {
                 str.Write(xmlString);
             }
 
-            /*ReportImporter reporter = new ReportImporter();
-            reporter.GetZipFile();*/
+
+            var objectsFromXml = xmlSerializer.ParseXml<List<Nitrogen.Mongo.Models.Place>>(xmlFilePath);
+
+            Console.WriteLine();
         }
+
+        
     }
 }

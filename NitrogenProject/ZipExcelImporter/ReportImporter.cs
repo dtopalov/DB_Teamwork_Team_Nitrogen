@@ -23,9 +23,7 @@
                     DateTime timeOfTheReport = DateTime.Parse(date);
 
                     string fileExtenstion = zEntity.FileName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).Last();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Processing " + zEntity.FileName);
-                    Console.ResetColor();
+                    Console.WriteLine(fileExtenstion);
 
                     using (var memo = new MemoryStream())
                     {
@@ -64,8 +62,6 @@
             {
                 var nameOfPlace = firstTableRows[0].ItemArray[0].ToString();
                 var idOfThePlace = dbConnection.Places.Where(p => p.Name == nameOfPlace).Select(p => p.PlaceId).FirstOrDefault();
-                var idsOfProducts = dbConnection.Products.Select(x => x.ProductId).ToList();
-
                 Place newPlace = new Place();
                 if (idOfThePlace == 0)
                 {
@@ -80,17 +76,10 @@
                 for (int i = 2; i < firstTableRows.Count; i++)
                 {
                     theNewSale = new Sale();
+
                     var row = firstTableRows[i];
-                    int reportProductId = int.Parse(row.ItemArray[0].ToString());
 
-                    if (!idsOfProducts.Contains(reportProductId))
-                    {
-                        Console.WriteLine(
-                            string.Format("The id: {0} is not contains in Products! Report cannot be processed.", reportProductId));
-                        continue;
-                    }
-
-                    theNewSale.ProductId = reportProductId;
+                    theNewSale.ProductId = int.Parse(row.ItemArray[0].ToString());
                     theNewSale.Quantity = int.Parse(row.ItemArray[1].ToString());
                     theNewSale.PricePerUnit = decimal.Parse(row.ItemArray[2].ToString());
                     theNewSale.Sum = decimal.Parse(row.ItemArray[3].ToString());
