@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Xml.Serialization;
     using ZipExcelImporter;
+    using Nitrogen.PdfReport;
 
     internal class Start
     {
@@ -44,7 +45,7 @@
             //    );
 
             //logs.Update(query, update);
-
+            /*
             MongoRepository mongoCtx = new MongoRepository();
 
             List<Nitrogen.Mongo.Models.Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
@@ -84,12 +85,13 @@
 
             var objectsFromXml = xmlSerializer.ParseXml<List<Nitrogen.Mongo.Models.Place>>(xmlFilePath);
 
-            Console.WriteLine();
+            Console.WriteLine();*/
 
             /*ReportImporter importer = new ReportImporter();
             importer.GetZipFile();*/
-        }
 
-        
+            PdfProcess pdfReport = new PdfProcess();
+            pdfReport.ProcessDocument();
+        }
     }
 }
