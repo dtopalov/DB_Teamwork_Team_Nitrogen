@@ -45,9 +45,9 @@
 
             //logs.Update(query, update);
 
-            MongoRepository mongoCtx = new MongoRepository();
+            //MongoRepository mongoCtx = new MongoRepository();
 
-            List<Nitrogen.Mongo.Models.Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
+            //List<Nitrogen.Mongo.Models.Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
             
             //using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
             //{
@@ -71,23 +71,23 @@
             //    ctx.SaveChanges();
             //}
 
-            var xmlSerializer = new Nitrogen.Serializers.XmlSerialzer();
+            //var xmlSerializer = new Nitrogen.Serializers.XmlSerialzer();
             
-            var xmlString = xmlSerializer.Serialize<List<Nitrogen.Mongo.Models.Place>>(allPlaces);
+            //var xmlString = xmlSerializer.Serialize<List<Nitrogen.Mongo.Models.Place>>(allPlaces);
 
-            var xmlFilePath = "../../places.xml";
+            //var xmlFilePath = "../../places.xml";
 
-            using (var str = new StreamWriter(xmlFilePath))
-            {
-                str.Write(xmlString);
-            }
+            //using (var str = new StreamWriter(xmlFilePath))
+            //{
+            //    str.Write(xmlString);
+            //}
 
-            var objectsFromXml = xmlSerializer.ParseXml<List<Nitrogen.Mongo.Models.Place>>(xmlFilePath);
+            //var objectsFromXml = xmlSerializer.ParseXml<List<Nitrogen.Mongo.Models.Place>>(xmlFilePath);
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
-            /*ReportImporter importer = new ReportImporter();
-            importer.GetZipFile();*/
+            ReportImporter importer = new ReportImporter();
+            importer.GetZipFile();
         }
 
         
