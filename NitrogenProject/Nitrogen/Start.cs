@@ -10,6 +10,8 @@
     using System.Xml.Serialization;
     using ZipExcelImporter;
     using Nitrogen.PdfReport;
+    using Newtonsoft.Json;
+    
 
     internal class Start
     {
@@ -46,7 +48,7 @@
 
             //logs.Update(query, update);
 
-            MongoRepository mongoCtx = new MongoRepository();
+            //MongoRepository mongoCtx = new MongoRepository();
 
             //List<Nitrogen.Mongo.Models.Place> allPlaces = mongoCtx.GetAllPlaces().ToList();
             
@@ -89,9 +91,38 @@
 
             /*ReportImporter importer = new ReportImporter();
             importer.GetZipFile();*/
-
+/*
             PdfProcess pdfReport = new PdfProcess();
-            pdfReport.ProcessDocument();
+            pdfReport.ProcessDocument();*/
+
+            using (NitrogenMsSqlDb ctx = new NitrogenMsSqlDb())
+            {
+                var reports = (from s in ctx.Sales
+                               join p in ctx.Products on s.ProductId equals p.ProductId
+                               join pl in ctx.Places on s.PlaceId equals pl.PlaceId
+                               select new
+                               {
+                                   Date = s.Date,
+                                   ProductName = p.Name,
+                                   ThePlace = pl.Name,
+                                   Quantity = s.Quantity,
+                                   PricePerUnit = s.PricePerUnit,
+                                   Sum = s.Sum
+                               })
+                             .GroupBy(s => s.Date)
+                             .ToList();
+
+                int counter = 1;
+
+                foreach (var rep in reports)
+                {
+                    using (var writer = new StreamWriter("../../report" + counter + ".json"))
+                    {
+                        writer.Write(JsonConvert.SerializeObject(rep, Formatting.Indented));
+                    }
+                    counter++;
+                }
+            }
         }
     }
 }
