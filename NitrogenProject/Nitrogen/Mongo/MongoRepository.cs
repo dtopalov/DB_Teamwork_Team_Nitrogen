@@ -17,11 +17,11 @@ namespace Nitrogen.Mongo
             return server.GetDatabase(name);
         }
 
-        public IQueryable<Nitrogen.Mongo.Models.Place> GetAllPlaces()
+        public IQueryable<Place> GetAllPlaces()
         {
             var db = this.GetDatabase(this.dataBaseName, this.dataBaseHost);
             var places = db.GetCollection<Nitrogen.Mongo.Models.Place>("Places");
-            IQueryable<Nitrogen.Mongo.Models.Place> allPlaces = places.FindAll().Select(x => new Nitrogen.Mongo.Models.Place()
+            IQueryable<Place> allPlaces = places.FindAll().Select(x => new Place()
             {
                 Name = x.Name,
                 Address = x.Address
